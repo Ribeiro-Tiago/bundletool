@@ -1,6 +1,6 @@
 {
   "name": "bundletool",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "An unoficial wrapper around google's bundletool",
   "main": "lib/index.js",
   "scripts": {
