@@ -1,6 +1,8 @@
 name: npm publish
 
 on:
+  push:
+    branch: [master]
   release:
     types: [created]
 
@@ -21,7 +23,6 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
   build-publish-gpr:
-    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
