@@ -1,8 +1,6 @@
 name: npm publish
 
 on:
-  push:
-    branch: [master]
   release:
     types: [created]
 
@@ -21,17 +19,17 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-
-  build-publish-gpr:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-          registry-url: https://npm.pkg.github.com/
-      - run: npm install
-      - run: npm ci
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  #build-publish-gpr:
+  #runs-on: ubuntu-latest
+  #steps:
+  #- uses: actions/checkout@v2
+  #- uses: actions/setup-node@v1
+  #with:
+  #node-version: 12
+  #registry-url: https://npm.pkg.github.com/
+  #- run: npm install
+  #- run: npm ci
+  #- run: npm build
+  #- run: npm publish
+  #env:
+  #NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
