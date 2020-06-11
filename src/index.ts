@@ -3,17 +3,15 @@ import { resolve, join } from "path";
 import request from "request-promise";
 import requestSync from "request";
 import { spawnSync } from "child_process";
-import { config as dotenv } from "dotenv";
 
 import { RequestResponse, Command } from "./types";
 
-dotenv();
-
-const DEFAULT_BASE_DIRECTORY = resolve(__dirname, process.env.BIN as string);
+// change to ../node_modules/bin when developing this
+const BIN_PATH = "../bin";
+const DEFAULT_BASE_DIRECTORY = resolve(__dirname, BIN_PATH);
 const BUNDLETOOL_URL =
   "https://api.github.com/repos/google/bundletool/releases/latest";
-const BUNDLETOOL_FILE_NAME = "bundletool.jar";
-const BUNDLETOOL_FILE_PATH = join(DEFAULT_BASE_DIRECTORY, BUNDLETOOL_FILE_NAME);
+const BUNDLETOOL_FILE_PATH = join(DEFAULT_BASE_DIRECTORY, "bundletool.jar");
 
 const getFileStream = () => {
   if (!existsSync(DEFAULT_BASE_DIRECTORY)) {

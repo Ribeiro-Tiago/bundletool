@@ -1,2 +1,6 @@
+v1.0.1 (11/06/2020)
+- fixed directory for node_modules/bin in "prod"
+- added more stuff to npmignore
+
 v1.0.0 (11/06/2020)
 - initial release
