@@ -43,3 +43,6 @@ Always welcome. Check the [guidelines](https://github.com/Ribeiro-Tiago/bundleto
 ### Legal notice
 
 By using this module you agree to this module's license and google's terms and conditions, which you can find in NOTICE.txt under the platform tools installation
+
+# 
+<a href="https://www.buymeacoffee.com/ribeirotiago" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-violet.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>
