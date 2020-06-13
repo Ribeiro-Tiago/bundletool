@@ -10,7 +10,7 @@ const BUNDLETOOL_URL = `https://github.com/google/bundletool/releases/download/$
 
 const log = (message) => {
   const logLevel = process.env.npm_config_loglevel;
-  const logLevelDisplay = ["silent", "error", "warn"].indexOf(logLevel) > -1;
+  const logLevelDisplay = ["silent", "error", "warn"].includes(logLevel);
 
   if (!logLevelDisplay) {
     console.log(message);
