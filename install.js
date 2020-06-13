@@ -1,11 +1,11 @@
 const { existsSync, mkdirSync, createWriteStream } = require("fs");
 const axios = require("axios");
 
-const pkg = require("./package.json");
-
-const BUNDLETOOL_VERSION = pkg.bundletool.version;
-
-const { DEFAULT_BASE_DIRECTORY, BUNDLETOOL_FILE_PATH } = require("./bin");
+const {
+  BUNDLETOOL_VERSION,
+  DEFAULT_BASE_DIRECTORY,
+  BUNDLETOOL_FILE_PATH,
+} = require("./constants");
 const BUNDLETOOL_URL = `https://github.com/google/bundletool/releases/download/${BUNDLETOOL_VERSION}/bundletool-all-${BUNDLETOOL_VERSION}.jar`;
 
 const log = (message) => {
@@ -25,7 +25,7 @@ const getFileStream = () => {
   return createWriteStream(BUNDLETOOL_FILE_PATH);
 };
 
-const downloadBinary = async () => {
+const downloadBinary = () => {
   return new Promise(async (resolve, reject) => {
     log(
       `Downloading bundletool ${BUNDLETOOL_VERSION} to ${BUNDLETOOL_FILE_PATH}`,
