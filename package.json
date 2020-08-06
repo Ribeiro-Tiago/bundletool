@@ -1,6 +1,6 @@
 {
   "name": "bundletool",
-  "version": "1.1.1",
+  "version": "1.2.3",
   "description": "An unoficial wrapper around google's bundletool",
   "main": "lib/index.js",
   "scripts": {
@@ -19,8 +19,14 @@
     "url": "https://tiago-ribeiro.com"
   },
   "contributors": [
-    { "name": "Noah Prail", "url": "https://github.com/nprail" },
-    { "name": "Josh Pike", "url": "https://github.com/jpike88" 
+    {
+      "name": "Noah Prail",
+      "url": "https://github.com/nprail"
+    },
+    {
+      "name": "Josh Pike",
+      "url": "https://github.com/jpike88"
+    }
   ],
   "license": "GNU AGPLv3",
   "dependencies": {
