@@ -1,10 +1,17 @@
+// @ts-check
 const { existsSync, mkdirSync, createWriteStream } = require("fs");
 const axios = require("axios");
+const path = require("path");
+const pkg = require("./package.json");
+const mkdir = require("mkdirp");
+const fs = require("fs");
+const process = require("process");
 
 const {
   BUNDLETOOL_VERSION,
   DEFAULT_BASE_DIRECTORY,
   BUNDLETOOL_FILE_PATH,
+  BUNDLETOOL_FILE_NAME,
 } = require("./constants");
 const BUNDLETOOL_URL = `https://github.com/google/bundletool/releases/download/${BUNDLETOOL_VERSION}/bundletool-all-${BUNDLETOOL_VERSION}.jar`;
 
@@ -15,14 +22,6 @@ const log = (message) => {
   if (!logLevelDisplay) {
     console.log(message);
   }
-};
-
-const getFileStream = () => {
-  if (!existsSync(DEFAULT_BASE_DIRECTORY)) {
-    mkdirSync(DEFAULT_BASE_DIRECTORY);
-  }
-
-  return createWriteStream(BUNDLETOOL_FILE_PATH);
 };
 
 const downloadBinary = () => {
@@ -41,9 +40,25 @@ const downloadBinary = () => {
       },
     });
 
-    data.pipe(getFileStream());
+    data.pipe(createWriteStream(BUNDLETOOL_FILE_PATH));
 
     data.on("end", () => {
+      const cachePath = getBinaryCachePath();
+      if (cachePath) {
+        const cachedBinary = path.join(cachePath, BUNDLETOOL_FILE_NAME);
+
+        console.log("Caching binary to", cachedBinary);
+        try {
+          mkdir.sync(path.dirname(cachePath));
+          fs.createReadStream(BUNDLETOOL_FILE_PATH)
+            .pipe(fs.createWriteStream(cachedBinary))
+            .on("error", function (err) {
+              console.log("Failed to cache binary:", err);
+            });
+        } catch (err) {
+          console.log("Failed to cache binary:", err);
+        }
+      }
       resolve(BUNDLETOOL_FILE_PATH);
     });
     data.on("error", (error) => {
@@ -54,10 +69,60 @@ const downloadBinary = () => {
   });
 };
 
-const setupBundletool = async () => {
-  if (!existsSync(BUNDLETOOL_FILE_PATH)) {
-    await downloadBinary();
+function getBinaryCachePath() {
+  const cachePath = path.join(
+    process.env.npm_config_cache,
+    pkg.name,
+    pkg.version,
+  );
+
+  try {
+    mkdir.sync(cachePath);
+    return cachePath;
+  } catch (e) {
+    // Directory is not writable, try another
   }
+
+  return "";
+}
+
+function getCachedBinary() {
+  const cachePath = path.join(
+    process.env.npm_config_cache,
+    pkg.name,
+    pkg.version,
+  );
+  const cacheBinary = path.join(cachePath, BUNDLETOOL_FILE_NAME);
+
+  if (fs.existsSync(cacheBinary)) {
+    return cacheBinary;
+  }
+
+  return "";
+}
+
+const setupBundletool = async () => {
+  // bundletool already downloaded and ready to go
+  if (existsSync(BUNDLETOOL_FILE_PATH)) {
+    console.log("Binary already present, proceed");
+    return;
+  }
+
+  const binaryPath = getCachedBinary();
+
+  if (!existsSync(DEFAULT_BASE_DIRECTORY)) {
+    mkdirSync(DEFAULT_BASE_DIRECTORY);
+  }
+
+  // check for existing binary, if found, copy it over
+  if (fs.existsSync(binaryPath)) {
+    fs.copyFileSync(binaryPath, BUNDLETOOL_FILE_PATH);
+    console.log("Cached binary found at", binaryPath);
+    return;
+  }
+
+  // cached binary not found, proceed to download
+  await downloadBinary();
 };
 
 setupBundletool();
