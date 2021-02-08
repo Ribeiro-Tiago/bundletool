@@ -80,7 +80,7 @@ function getBinaryCachePath() {
     mkdir.sync(cachePath);
     return cachePath;
   } catch (e) {
-    // Directory is not writable, try another
+    console.error('cache path not found!!! ' + cachePath); 
   }
 
   return "";
