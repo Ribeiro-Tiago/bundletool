@@ -30,7 +30,7 @@
   ],
   "license": "GNU AGPLv3",
   "dependencies": {
-    "mkdirp": "^1.0.4"
+    "mkdirp": "^1.0.4",
     "axios": "^0.21.1"
   },
   "devDependencies": {
