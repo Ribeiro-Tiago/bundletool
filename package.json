@@ -19,8 +19,14 @@
     "url": "https://tiago-ribeiro.com"
   },
   "contributors": [
-    { "name": "Noah Prail", "url": "https://github.com/nprail" },
-    { "name": "Josh Pike", "url": "https://github.com/jpike88" }
+    {
+      "name": "Noah Prail",
+      "url": "https://github.com/nprail"
+    },
+    {
+      "name": "Josh Pike",
+      "url": "https://github.com/jpike88"
+    }
   ],
   "license": "GNU AGPLv3",
   "dependencies": {
