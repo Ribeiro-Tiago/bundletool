@@ -1,8 +1,15 @@
 name: npm publish
 
 on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Why triggering it manually'
+        required: false
+        default: "need to trigger publish workflow but don't want to create a new release"
   release:
     types: [created]
+  
 
 jobs:
   build-publish-npm:
