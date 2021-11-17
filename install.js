@@ -1,4 +1,5 @@
 // @ts-check
+const { spawnSync } = require("child_process");
 const { existsSync, mkdirSync, createWriteStream } = require("fs");
 const axios = require("axios");
 const path = require("path");
@@ -14,6 +15,16 @@ const {
   BUNDLETOOL_FILE_NAME,
 } = require("./constants");
 const BUNDLETOOL_URL = `https://github.com/google/bundletool/releases/download/${BUNDLETOOL_VERSION}/bundletool-all-${BUNDLETOOL_VERSION}.jar`;
+
+// process.env.npm_config_cache is not set if installing via yarn, and there's no
+// other env variable that determines the caching dir for yarn. so we'll need to fetch
+// yarn cache via terminal  (couldn't find another way to get yarn cache dir)
+//
+// if installing through yarn npm_config_user_agent will have "yarn/<version>" (among other things)
+// if installing through npm, this variable only references npm / node.
+const CACHE_DIR = process.env.npm_config_user_agent.includes("yarn")
+  ? spawnSync("yarn", ["cache", "dir"]).stdout.toString()
+  : process.env.npm_config_cache;
 
 const log = (message) => {
   const logLevel = process.env.npm_config_loglevel;
@@ -70,28 +81,20 @@ const downloadBinary = () => {
 };
 
 function getBinaryCachePath() {
-  const cachePath = path.join(
-    process.env.npm_config_cache,
-    pkg.name,
-    pkg.version,
-  );
+  const cachePath = path.join(CACHE_DIR, pkg.name, pkg.version);
 
   try {
     mkdir.sync(cachePath);
     return cachePath;
   } catch (e) {
-    console.error('cache path not found!!! ' + cachePath); 
+    console.error("Cache path not found! " + cachePath);
   }
 
   return "";
 }
 
 function getCachedBinary() {
-  const cachePath = path.join(
-    process.env.npm_config_cache,
-    pkg.name,
-    pkg.version,
-  );
+  const cachePath = path.join(CACHE_DIR, pkg.name, pkg.version);
   const cacheBinary = path.join(cachePath, BUNDLETOOL_FILE_NAME);
 
   if (fs.existsSync(cacheBinary)) {
