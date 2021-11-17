@@ -1,3 +1,6 @@
+v1.1.2 (08/02/2021)
+ - Add binary caching, credits to https://github.com/jpike88
+
 v1.1.1 (13/07/2020)
  - updated bundletool version to v1.0.0
 
