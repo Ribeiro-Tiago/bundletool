@@ -16,15 +16,6 @@ const {
 } = require("./constants");
 const BUNDLETOOL_URL = `https://github.com/google/bundletool/releases/download/${BUNDLETOOL_VERSION}/bundletool-all-${BUNDLETOOL_VERSION}.jar`;
 
-const log = (message) => {
-  const logLevel = process.env.npm_config_loglevel;
-  const logLevelDisplay = ["silent", "error", "warn"].includes(logLevel);
-
-  if (!logLevelDisplay) {
-    console.log(message);
-  }
-};
-
 // process.env.npm_config_cache is not set if installing via yarn, and there's no
 // other env variable that determines the caching dir for yarn. so we'll need to fetch
 // yarn cache via terminal  (couldn't find another way to get yarn cache dir)
@@ -34,6 +25,15 @@ const log = (message) => {
 const CACHE_DIR = process.env.npm_config_user_agent.includes("yarn")
   ? spawnSync("yarn", ["cache", "dir"]).stdout.toString()
   : process.env.npm_config_cache;
+
+const log = (message) => {
+  const logLevel = process.env.npm_config_loglevel;
+  const logLevelDisplay = ["silent", "error", "warn"].includes(logLevel);
+
+  if (!logLevelDisplay) {
+    console.log(message);
+  }
+};
 
 const downloadBinary = () => {
   return new Promise(async (resolve, reject) => {
