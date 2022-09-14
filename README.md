@@ -21,8 +21,8 @@ import bundletool from "bundletool" // or the require equivalent
 await bundletool([command], [args]); // async / await
 
 bundletool([command], [args])
-  .then(response => /* do something */);
-  .catch(err => /* handle err */ )
+  .then(response => /* do something */)
+  .catch(err => /* handle err */ );
 ```
 
 ### API
