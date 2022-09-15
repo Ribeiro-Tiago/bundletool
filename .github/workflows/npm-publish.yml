@@ -4,9 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       reason:
-        description: 'Used when workflow needs to be triggered but don't wanna create a new release'
+        description: "Used when workflow needs to be triggered but don't wanna create a new release"
         required: false
-        default: "-"
   release:
     types: [created]
   
