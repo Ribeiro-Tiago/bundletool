@@ -1,6 +1,6 @@
 {
   "name": "bundletool",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "An unoficial wrapper around google's bundletool",
   "repository": "github:Ribeiro-Tiago/bundletool",
   "main": "lib/index.js",
@@ -27,6 +27,10 @@
     {
       "name": "Josh Pike",
       "url": "https://github.com/jpike88"
+    },
+    {
+      "name": "Christian Zommerfelds",
+      "url": "https://github.com/zommerfelds"
     }
   ],
   "license": "AGPL-3.0-or-later",
