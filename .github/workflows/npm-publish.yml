@@ -4,8 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       reason:
-        description: "Used when workflow needs to be triggered but don't wanna create a new release"
+        description: 'Why triggering it manually'
         required: false
+        default: "Need to trigger publish workflow but don't want to create a new release"
   release:
     types: [created]
   
