@@ -5,7 +5,7 @@ import { Command } from "./types";
 import { BUNDLETOOL_FILE_PATH } from "../constants";
 
 
-var checkedJava = false;
+let checkedJava = false;
 function checkJavaInPath() {
   if (!commandExists.sync('java')) {
     throw new Error("Java is required for bundletool");
