@@ -35,7 +35,7 @@
   ],
   "license": "AGPL-3.0-or-later",
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^1.6.0",
     "command-exists": "^1.2.9",
     "mkdirp": "^1.0.4"
   },
